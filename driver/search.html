@@ -30,7 +30,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   // TODO(jeffposnick): Make this work with existing/additional search parameters
   SearchDriver.prototype.navigateToUrl = function navigateToUrl(url) {
-    window.history.pushState({}, '', '?' + encodeURIComponent(url));
+    if (url.indexOf('?') === 0) {
+      url = url.substring(1);
+    }
+    url = '?' + encodeURIComponent(url);
+
+    window.history.pushState({}, '', url);
     this._read();
   };
 
