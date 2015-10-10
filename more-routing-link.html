@@ -1,0 +1,42 @@
+<!--
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="routing.html">
+
+<!--
+A Polymer element that simplifies creating `<a>` elements that implement `more-routing` compliant behavior.
+-->
+<dom-module id="more-routing-link">
+  <style>
+    :host {
+      display: inline;
+    }
+  </style>
+
+  <template>
+    <a href$="[[_computeUrl(route)]]" on-tap="_onTap"><content></content></a>
+  </template>
+
+  <script>
+    'use strict';
+    Polymer({
+      is: 'more-routing-link',
+      properties: {
+        route: String
+      },
+      _computeUrl: function(route) {
+        return MoreRouting.urlFor(route);
+      },
+      _onTap: function(event) {
+        event.stopPropagation();
+        MoreRouting.navigateTo(this.route);
+      }
+    });
+  </script>
+</dom-module>
