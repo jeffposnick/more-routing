@@ -10,33 +10,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <script>
 (function(scope) {
-var MoreRouting = scope.MoreRouting = scope.MoreRouting || {};
-MoreRouting.SearchDriver = SearchDriver;
+  var MoreRouting = scope.MoreRouting = scope.MoreRouting || {};
+  MoreRouting.SearchDriver = SearchDriver;
 
-/**
- * TODO(jeffposnick): Docs.
- */
-function SearchDriver() {
-  MoreRouting.Driver.apply(this, arguments);
-  this._bindEvents();
-  this._read();
-}
+  /**
+   * TODO(jeffposnick): Docs.
+   */
+  function SearchDriver() {
+    MoreRouting.Driver.apply(this, arguments);
+    this._bindEvents();
+    this._read();
+  }
 
-SearchDriver.prototype = Object.create(MoreRouting.Driver.prototype);
+  SearchDriver.prototype = Object.create(MoreRouting.Driver.prototype);
 
-// TODO(jeffposnick): Make this work with existing/additional search parameters
-SearchDriver.prototype.navigateToUrl = function navigateToUrl(url) {
-  window.history.pushState({}, '', '?' + encodeURIComponent(url));
-  this._read();
-};
+  SearchDriver.prototype.urlForParts = function urlForParts(parts) {
+    return '?' + MoreRouting.Driver.prototype.urlForParts.call(this, parts);
+  };
 
-SearchDriver.prototype._bindEvents = function _bindEvents() {
-  window.addEventListener('popstate', this._read.bind(this));
-};
+  // TODO(jeffposnick): Make this work with existing/additional search parameters
+  SearchDriver.prototype.navigateToUrl = function navigateToUrl(url) {
+    window.history.pushState({}, '', '?' + encodeURIComponent(url));
+    this._read();
+  };
 
-SearchDriver.prototype._read = function _read() {
-  this.setCurrentPath(decodeURIComponent(window.location.search.substring(1) || '/'));
-};
+  SearchDriver.prototype._bindEvents = function _bindEvents() {
+    window.addEventListener('popstate', this._read.bind(this));
+  };
 
+  SearchDriver.prototype._read = function _read() {
+    this.setCurrentPath(decodeURIComponent(window.location.search.substring(1) || '/'));
+  };
 })(window);
 </script>
