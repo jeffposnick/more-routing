@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="driver/hash.html">
 <link rel="import" href="driver/mock.html">
 <link rel="import" href="driver/path.html">
+<link rel="import" href="driver/search.html">
 
 <script>
 
@@ -27,6 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        *
        *  * `hash`: `MoreRouting.HashDriver`
        *  * `path`: `MoreRouting.PathDriver`
+       *  * `search`: `MoreRouting.SearchDriver`
        *  * `mock`: `MoreRouting.MockDriver`
        *
        */
@@ -51,6 +53,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         driver = new MoreRouting.PathDriver(config);
       } else if (this.driver === 'mock') {
         driver = new MoreRouting.MockDriver(config);
+      } else if (this.driver === 'search') {
+        driver = new MoreRouting.SearchDriver(config);
       } else {
         throw new Error('Unknown driver type "' + this.driver + '"');
       }
